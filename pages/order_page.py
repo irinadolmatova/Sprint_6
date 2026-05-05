@@ -28,10 +28,8 @@ class OrderPage(BasePage):
         self.set_text(OrderPageLocators.ADRESS, address)
 
     @allure.step('Заполнение поля Станция метро')
-    def filling_metro_field(self):
-        element = self.find_element(OrderPageLocators.METRO)
-        element.send_keys('Пушкинская')
-        element.send_keys(Keys.DOWN, Keys.ENTER)
+    def filling_metro_field(self, metro):
+        self.set_text(OrderPageLocators.METRO, metro)
 
     @allure.step('Заполнение поля Телефон')
     def filling_phone_field(self, phone):
@@ -48,9 +46,8 @@ class OrderPage(BasePage):
         element.send_keys(Keys.ENTER)
 
     @allure.step('Заполнение поля Срок аренды')
-    def filling_rent_field(self):
-        self.click_element(OrderPageLocators.RENT_PERIOD)
-        self.click_element(OrderPageLocators.CHOOSE_RENTAL_PERIOD)
+    def filling_rent_field(self, rent_period):
+        self.click_element(OrderPageLocators.RENT_PERIOD, rent_period)
 
     @allure.step('Выбор цвета самоката')
     def choose_colour(self, colour_scooter):
@@ -71,19 +68,22 @@ class OrderPage(BasePage):
 
 
     @allure.step('Заполнение поля формы заказа')
-    def set_order_form(self, data, colour_scooter):
-        name, surname, address, phone, date, comment = data
-        self.filling_name_field(name)
-        self.filling_surname_field(surname)
-        self.filling_adress_field(address)
-        self.filling_metro_field()
-        self.filling_phone_field(phone)
+    def set_order_form(self, data: dict, colour_scooter):
+        self.filling_name_field(data["name"])
+        self.filling_surname_field(data["surname"])
+        self.filling_adress_field(data["address"])
+        self.filling_metro_field(data["metro"])
+        self.filling_phone_field(data["phone"])
         self.click_next()
         self.wait_for_visibility(OrderPageLocators.DATE)
-        self.filling_date_field(date)
-        self.filling_rent_field()
+        self.filling_date_field(data["date"])
+        self.filling_rent_field(data["rent_period"])
         self.choose_colour(colour_scooter)
-        self.filling_comment_field(comment)
+        self.filling_comment_field(data["comment"])
+
+    
+    @allure.step('Подтверждение заказа и проверка успеха')
+    def confirm_and_check_order(self):
         self.confirm()
         return self.wait_message_success_order()
     

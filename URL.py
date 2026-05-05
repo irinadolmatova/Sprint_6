@@ -1,2 +1,2 @@
 MAIN_URL = "https://qa-scooter.praktikum-services.ru/"
-ORDER_URL = "https://qa-scooter.praktikum-services.ru/order"
+ORDER_URL = f"{MAIN_URL}/order"

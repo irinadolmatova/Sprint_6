@@ -14,10 +14,11 @@ class TestOrderPage:
         (OrderPageLocators.FOOTER_ORDER_BUTTON, OrderPageLocators.BLACK_COLOUR),
         (OrderPageLocators.FOOTER_ORDER_BUTTON, OrderPageLocators.GREY_COLOUR)
         ])
-    def test_order_scooter(self, driver, data_for_order, BUTTON_ORDER, COLOUR_LOCATOR):
+    def test_order_scooter(self, driver, data, BUTTON_ORDER, COLOUR_LOCATOR):
         page = OrderPage(driver)
         question_page = QuestionPage(driver)
         question_page.accept_cookies()
         page.push_order_button(BUTTON_ORDER)
-        result_text = page.set_order_form(data_for_order, COLOUR_LOCATOR)
+        page.set_order_form(data, COLOUR_LOCATOR)
+        result_text = page.confirm_and_check_order()
         assert "Заказ оформлен" in result_text

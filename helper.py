@@ -8,7 +8,9 @@ class OrderDataHelper:
         name = random.choice(names)
         surname = random.choice(surnames)
         address = f"Москва, ул. Пушкинская, д. {random.randint(100, 200)}"
+        metro = "Пушкинская"
         phone = f"79{random.randint(100000000, 999999999)}"
         date = f"{random.randint(10, 28)}.{random.randint(10, 12)}.2026"
+        rent_period = "сутки"
         comment = "комментарий"
-        return name, surname, address, phone, date, comment
+        return name, surname, address, metro, phone, date, rent_period, comment
